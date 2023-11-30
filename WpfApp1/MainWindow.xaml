@@ -5,27 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="633">
+        Title="MainWindow" Height="450" Width="736">
     <Grid>
         <TextBlock Margin="166,25,156,0" FontSize="30px" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Tiddlywings World cup"/></TextBlock>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="22,116,455,115"/>
-        <TextBlock HorizontalAlignment="Right" Margin="0,84,540,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="20px" VerticalAlignment="Top"><Run Language="en-ie" Text="Teams:"/></TextBlock>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="271,121,190,110"/>
-        <TextBlock HorizontalAlignment="Right" Margin="0,89,283,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="20px" VerticalAlignment="Top"><Run Language="en-ie" Text="Players"/><Run Text=":"/></TextBlock>
-        <TextBlock HorizontalAlignment="Right" Margin="0,93,27,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Player rating:"/></TextBlock>
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Width="68" Margin="0,116,28,0">
+        <ListBox x:Name="teamsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="22,116,497,115" SelectionChanged="teamsList_SelectionChanged"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,82,650,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="20px" VerticalAlignment="Top"><Run Language="en-ie" Text="Teams:"/></TextBlock>
+        <ListBox x:Name="playersList" Margin="271,116,239,115" SelectionChanged="playersList_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding ResultRecord}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock HorizontalAlignment="Right" Margin="0,82,393,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="20px" VerticalAlignment="Top"><Run Language="en-ie" Text="Players"/><Run Text=":"/></TextBlock>
+        <TextBlock HorizontalAlignment="Right" Margin="0,96,40,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Player rating:"/></TextBlock>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Width="84" Margin="0,116,28,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="59*"/>
             </Grid.ColumnDefinitions>
-            <Image HorizontalAlignment="Left" Source="images/staroutline.png" Height="28" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2"/>
+            <Image HorizontalAlignment="Left" Source="/images/staroutline.png" Height="28" VerticalAlignment="Center" Width="20" Grid.ColumnSpan="2"/>
             <Image HorizontalAlignment="Left" Source="/images/staroutline.png" Height="28" VerticalAlignment="Center" Width="20" Grid.Column="1" Margin="15,0,0,0"/>
             <Image HorizontalAlignment="Left" Source="/images/staroutline.png" Height="28" Margin="39,0,0,0" VerticalAlignment="Center" Width="20" Grid.Column="1"/>
         </Grid>
-        <TextBlock HorizontalAlignment="Right" Margin="0,174,24,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Record result:"/></TextBlock>
-        <Button Content="WIN" HorizontalAlignment="Right" Margin="0,203,67,0" VerticalAlignment="Top"/>
-        <Button Content="DRAW" HorizontalAlignment="Right" Margin="0,236,56,0" VerticalAlignment="Top"/>
-        <Button Content="LOSE" HorizontalAlignment="Right" Margin="0,270,63,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,174,35,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Record result:"/></TextBlock>
+        <Button Content="WIN" HorizontalAlignment="Right" Margin="0,203,78,0" VerticalAlignment="Top"/>
+        <Button Content="DRAW" HorizontalAlignment="Right" Margin="0,236,67,0" VerticalAlignment="Top"/>
+        <Button Content="LOSE" HorizontalAlignment="Right" Margin="0,270,74,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
