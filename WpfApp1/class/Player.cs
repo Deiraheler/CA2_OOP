@@ -9,15 +9,52 @@ namespace WpfApp1;
     {
     public string Name { get; set; }
     public string ResultRecord { get; set; }
+    public int Points { get; set; }
 
-    public int GetPoints()
+    public string FormattedInfo
     {
-        return ResultRecord;
+        get {
+            return $"{Name} - {ResultRecord} - {Points}"; 
+        }
+    }
+
+    public Player(string name, string results)
+    {
+        Name = name;
+        ResultRecord = results;
+
+        SetPoints();
+    }
+
+    public void SetPoints()
+    {
+        char[] resultArray = ResultRecord.ToCharArray();
+        char[] lastNItems = resultArray.Skip(resultArray.Length - 5).ToArray();
+
+        foreach (var item in lastNItems)
+        {
+            switch (item)
+            {
+                case 'W':
+                    Points += 3;
+                    break;
+                case 'D':
+                    Points += 1;
+                    break;
+            }
+        }
+    }
+
+    public int GetStars()
+    {
+        if (Points == 0) return 0;
+
+        return (int)Math.Ceiling((double)Points / 5);
     }
 
     public override string ToString()
     {
-        return ResultRecord;
+        return Points.ToString();
     }
 }
 

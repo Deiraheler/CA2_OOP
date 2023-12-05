@@ -14,15 +14,14 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding ResultRecord}"/>
+                        <TextBlock Text="{Binding FormattedInfo}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBlock HorizontalAlignment="Right" Margin="0,82,393,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="20px" VerticalAlignment="Top"><Run Language="en-ie" Text="Players"/><Run Text=":"/></TextBlock>
         <TextBlock HorizontalAlignment="Right" Margin="0,96,40,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Player rating:"/></TextBlock>
-        <Grid HorizontalAlignment="Right" VerticalAlignment="Top" Width="84" Margin="0,116,28,0">
+        <Grid x:Name="starsGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Width="84" Margin="0,116,28,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="59*"/>
@@ -32,7 +31,7 @@
             <Image HorizontalAlignment="Left" Source="/images/staroutline.png" Height="28" Margin="39,0,0,0" VerticalAlignment="Center" Width="20" Grid.Column="1"/>
         </Grid>
         <TextBlock HorizontalAlignment="Right" Margin="0,174,35,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Record result:"/></TextBlock>
-        <Button Content="WIN" HorizontalAlignment="Right" Margin="0,203,78,0" VerticalAlignment="Top"/>
+        <Button Content="WIN" HorizontalAlignment="Right" Margin="0,203,78,0" VerticalAlignment="Top" Click="Button_Click"/>
         <Button Content="DRAW" HorizontalAlignment="Right" Margin="0,236,67,0" VerticalAlignment="Top"/>
         <Button Content="LOSE" HorizontalAlignment="Right" Margin="0,270,74,0" VerticalAlignment="Top"/>
 
