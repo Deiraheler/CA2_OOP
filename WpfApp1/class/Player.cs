@@ -14,7 +14,7 @@ namespace WpfApp1;
     public string FormattedInfo
     {
         get {
-            return $"{Name} - {ResultRecord} - {Points}"; 
+            return $"{Name} - {ToString()} - {GetLastPoints()}"; 
         }
     }
 
@@ -26,12 +26,14 @@ namespace WpfApp1;
         SetPoints();
     }
 
+    /// <summary>
+    /// Setting points from all games
+    /// </summary>
     public void SetPoints()
     {
         char[] resultArray = ResultRecord.ToCharArray();
-        char[] lastNItems = resultArray.Skip(resultArray.Length - 5).ToArray();
 
-        foreach (var item in lastNItems)
+        foreach (var item in resultArray)
         {
             switch (item)
             {
@@ -45,6 +47,35 @@ namespace WpfApp1;
         }
     }
 
+    /// <summary>
+    /// Getting points from 5 last games
+    /// </summary>
+    /// <returns>(int) Points from 5 last games</returns>
+    public int GetLastPoints()
+    {
+        char[] lastPoints = ResultRecord.Skip(ResultRecord.Length - 5).ToArray();
+        int points = 0;
+
+        foreach (var item in lastPoints)
+        {
+            switch (item)
+            {
+                case 'W':
+                    points += 3;
+                    break;
+                case 'D':
+                    points += 1;
+                    break;
+            }
+        }
+
+        return points;
+    }
+
+    /// <summary>
+    /// Getting value for solid stars from points amount
+    /// </summary>
+    /// <returns>(int) (0 - 3) Stars amount</returns>
     public int GetStars()
     {
         if (Points == 0) return 0;
@@ -52,9 +83,22 @@ namespace WpfApp1;
         return (int)Math.Ceiling((double)Points / 5);
     }
 
+    /// <summary>
+    /// Adding new game result to previous games
+    /// </summary>
+    /// <param name="gameResult">('W','D','L')</param>
+    public void setGameResult(char gameResult)
+    {
+        char[] previousGames = ResultRecord.ToCharArray();
+        previousGames = previousGames.Skip(1).ToArray();
+        previousGames.Append(gameResult);
+    }
+
     public override string ToString()
     {
-        return Points.ToString();
+        string lastGamesResults = ResultRecord.Skip(ResultRecord.Length - 5).ToString();
+
+        return lastGamesResults;
     }
 }
 

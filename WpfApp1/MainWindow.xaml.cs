@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.ObjectModel;
+using System.Numerics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         //List with all Teams
-        List<Team> Teams = new List<Team>();
+        ObservableCollection<Team> Teams = new ObservableCollection<Team>();
         Player? selectedPlayer;
 
         public MainWindow()
@@ -36,11 +37,9 @@ namespace WpfApp1
         /// </summary>
         private void InitTeams()
         {
-            Teams.AddRange(new List<Team>{
-                new Team() { Name = "France" },
-                new Team() { Name = "Italy" },
-                new Team() { Name = "Spain" },
-            });
+            Teams.Add(new Team() { Name = "France" });
+            Teams.Add(new Team() { Name = "Italy" });
+            Teams.Add(new Team() { Name = "Spain" });
 
             //Adding players for France
             Teams[0].Players.AddRange(new List<Player>
@@ -151,6 +150,7 @@ namespace WpfApp1
         {
             if (checkPlayerSelect())
             {
+                selectedPlayer.setGameResult('W');
             }
         }
     }
