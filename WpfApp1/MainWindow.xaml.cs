@@ -29,7 +29,6 @@ namespace WpfApp1
             InitTeams();
 
             teamsList.ItemsSource = Teams;
-            teamsList.DisplayMemberPath = "Name";
         }
 
         /// <summary>
@@ -100,6 +99,7 @@ namespace WpfApp1
         /// <param name="player"></param>
         private void setStars(Player player)
         {
+            clearStars();
             for (int i = 0; i < player.GetStars(); i++) {
                 Image image = starsGrid.Children[i] as Image;
                 image.Source = new BitmapImage(new Uri("pack://application:,,,/images/starsolid.png", UriKind.Absolute));
@@ -146,11 +146,34 @@ namespace WpfApp1
             return false;
         }
 
+        /// <summary>
+        /// Event handler for buttons "WIN,LOSE,DRAW"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (checkPlayerSelect())
             {
-                selectedPlayer.setGameResult('W');
+                var button = sender as Button;
+                string s = button.Content.ToString();
+
+                if(s == "WIN")
+                {
+                    selectedPlayer.setGameResult('W');
+                }else if (s == "DRAW")
+                {
+                    selectedPlayer.setGameResult('D');
+                }
+                else
+                {
+                    selectedPlayer.setGameResult('L');
+                }
+
+                playersList.Items.Refresh();
+                teamsList.Items.Refresh();
+                setStars(selectedPlayer);
+
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfApp1;
     internal class Player
@@ -11,6 +12,9 @@ namespace WpfApp1;
     public string ResultRecord { get; set; }
     public int Points { get; set; }
 
+    /// <summary>
+    /// Binding this to player ListBox
+    /// </summary>
     public string FormattedInfo
     {
         get {
@@ -27,7 +31,7 @@ namespace WpfApp1;
     }
 
     /// <summary>
-    /// Setting points from all games
+    /// Setting (int)Points from (string)ResultRecord from all games 
     /// </summary>
     public void SetPoints()
     {
@@ -73,14 +77,14 @@ namespace WpfApp1;
     }
 
     /// <summary>
-    /// Getting value for solid stars from points amount
+    /// Getting value for solid stars from (5 last games) points amount
     /// </summary>
     /// <returns>(int) (0 - 3) Stars amount</returns>
     public int GetStars()
     {
-        if (Points == 0) return 0;
+        if (GetLastPoints() == 0) return 0;
 
-        return (int)Math.Ceiling((double)Points / 5);
+        return (int)Math.Ceiling((double)GetLastPoints() / 5);
     }
 
     /// <summary>
@@ -89,14 +93,16 @@ namespace WpfApp1;
     /// <param name="gameResult">('W','D','L')</param>
     public void setGameResult(char gameResult)
     {
-        char[] previousGames = ResultRecord.ToCharArray();
-        previousGames = previousGames.Skip(1).ToArray();
-        previousGames.Append(gameResult);
+        ResultRecord = ResultRecord.Insert(ResultRecord.Length, gameResult.ToString());
     }
 
+    /// <summary>
+    /// Returns 5 last games
+    /// </summary>
+    /// <returns>(string) last 5 games</returns>
     public override string ToString()
     {
-        string lastGamesResults = ResultRecord.Skip(ResultRecord.Length - 5).ToString();
+        string lastGamesResults = String.Concat(ResultRecord.Skip(ResultRecord.Length - 5));
 
         return lastGamesResults;
     }
