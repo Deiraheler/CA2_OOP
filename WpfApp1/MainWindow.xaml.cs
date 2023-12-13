@@ -19,7 +19,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         //List with all Teams
-        ObservableCollection<Team> Teams = new ObservableCollection<Team>();
+        List<Team> Teams = new List<Team>();
         Player? selectedPlayer;
 
         public MainWindow()
@@ -41,7 +41,7 @@ namespace WpfApp1
             Teams.Add(new Team() { Name = "Spain" });
 
             //Adding players for France
-            Teams[0].Players.AddRange(new List<Player>
+            Teams[0].AddPlayers(new List<Player>
             {
                 new Player("Marie","WWDDL"),
                 new Player("Claude","DDDLW"),
@@ -49,7 +49,7 @@ namespace WpfApp1
             });
 
             //Adding players for Italy
-            Teams[1].Players.AddRange(new List<Player>
+            Teams[1].AddPlayers(new List<Player>
             {
                 new Player("Marco","WWDLL"),
                 new Player("Giovanni","LLLLD"),
@@ -57,12 +57,14 @@ namespace WpfApp1
             });
 
             //Adding players for Spain
-            Teams[2].Players.AddRange(new List<Player>
+            Teams[2].AddPlayers(new List<Player>
             {
                 new Player("Maria","WWWWW"),
                 new Player("Jose","LLLLL"),
                 new Player("Pablo","DDDDD")
             });
+
+            Teams.Sort();
         }
 
         private void teamsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -146,6 +148,20 @@ namespace WpfApp1
             return false;
         }
 
+
+        /// <summary>
+        /// Updating Teams Points
+        /// </summary>
+        private void UpdatePoints()
+        {
+            Teams.ForEach(Team =>
+            {
+                Team.SetPoints();
+            });
+
+            Teams.Sort();
+        }
+
         /// <summary>
         /// Event handler for buttons "WIN,LOSE,DRAW"
         /// </summary>
@@ -170,11 +186,16 @@ namespace WpfApp1
                     selectedPlayer.setGameResult('L');
                 }
 
-                playersList.Items.Refresh();
-                teamsList.Items.Refresh();
+                UpdatePoints();
+                RefreshLists();
                 setStars(selectedPlayer);
-
             }
+        }
+
+        private void RefreshLists()
+        {
+            playersList.Items.Refresh();
+            teamsList.Items.Refresh();
         }
     }
 }

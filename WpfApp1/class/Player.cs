@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace WpfApp1;
-    internal class Player
+    internal class Player: IComparable<Player>
     {
     public string Name { get; set; }
     public string ResultRecord { get; set; }
@@ -18,7 +18,22 @@ namespace WpfApp1;
     public string FormattedInfo
     {
         get {
-            return $"{Name} - {ToString()} - {GetLastPoints()}"; 
+            return $"{Name} - {ToString()} - {Points}"; 
+        }
+    }
+
+    public int CompareTo(Player player)
+    {
+        if(this.Points < player.Points)
+        {
+            return 1;
+        }else if(this.Points > player.Points)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
         }
     }
 
@@ -31,13 +46,15 @@ namespace WpfApp1;
     }
 
     /// <summary>
-    /// Setting (int)Points from (string)ResultRecord from all games 
+    /// Getting points from 5 last games
     /// </summary>
+    /// <returns>(int) Points from 5 last games</returns>
     public void SetPoints()
     {
-        char[] resultArray = ResultRecord.ToCharArray();
+        char[] lastPoints = ResultRecord.Skip(ResultRecord.Length - 5).ToArray();
+        Points = 0;
 
-        foreach (var item in resultArray)
+        foreach (var item in lastPoints)
         {
             switch (item)
             {
@@ -52,39 +69,23 @@ namespace WpfApp1;
     }
 
     /// <summary>
-    /// Getting points from 5 last games
+    /// Return player points
     /// </summary>
-    /// <returns>(int) Points from 5 last games</returns>
-    public int GetLastPoints()
+    /// <returns>(int) points</returns>
+    public int GetPoints()
     {
-        char[] lastPoints = ResultRecord.Skip(ResultRecord.Length - 5).ToArray();
-        int points = 0;
-
-        foreach (var item in lastPoints)
-        {
-            switch (item)
-            {
-                case 'W':
-                    points += 3;
-                    break;
-                case 'D':
-                    points += 1;
-                    break;
-            }
-        }
-
-        return points;
+        return Points;
     }
 
     /// <summary>
-    /// Getting value for solid stars from (5 last games) points amount
+    /// Getting value for solid stars from points amount
     /// </summary>
     /// <returns>(int) (0 - 3) Stars amount</returns>
     public int GetStars()
     {
-        if (GetLastPoints() == 0) return 0;
+        if (Points == 0) return 0;
 
-        return (int)Math.Ceiling((double)GetLastPoints() / 5);
+        return (int)Math.Ceiling((double)Points / 5);
     }
 
     /// <summary>
@@ -94,6 +95,7 @@ namespace WpfApp1;
     public void setGameResult(char gameResult)
     {
         ResultRecord = ResultRecord.Insert(ResultRecord.Length, gameResult.ToString());
+        SetPoints();
     }
 
     /// <summary>

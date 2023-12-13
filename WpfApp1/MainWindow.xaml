@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="737">
     <Grid>
-        <TextBlock Margin="166,25,260,0" FontSize="30px" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Tiddlywings World cup"/></TextBlock>
+        <TextBlock Margin="166,25,200,0" FontSize="30px" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-ie" Text="Tiddlywings World cup"/></TextBlock>
         <ListBox x:Name="teamsList" Margin="22,116,497,115" SelectionChanged="teamsList_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>

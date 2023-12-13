@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfApp1;
-class Team
+class Team: IComparable<Team>
 {
     public string Name { get; set; }
     public int Points { get; set; }
@@ -24,20 +24,51 @@ class Team
         Players = new List<Player>();
     }
 
-    private int GetTeamPoints()
+    public int CompareTo(Team team)
+    {
+        if(this.Points < team.Points)
+        {
+            return 1;
+        }else if(this.Points > team.Points)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// Getting points from all players and writes to (int) Points/ Sorts players after
+    /// </summary>
+    public void SetPoints()
     {
         Points = 0;
 
         Players.ForEach(player =>
         {
-           Points += player.GetLastPoints();
+            Points += player.GetPoints();
         });
 
-        return Points;
+        Players.Sort();
     }
 
+    /// <summary>
+    /// Getting range of players and adding them to List players
+    /// </summary>
+    public void AddPlayers(IEnumerable<Player> players)
+    {
+        Players.AddRange(players);
+        SetPoints();
+    }
+
+    /// <summary>
+    /// Returns (int Points) in (string) data type
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
-        return GetTeamPoints().ToString();
+        return Points.ToString();
     }
 }
