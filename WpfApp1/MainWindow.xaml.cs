@@ -105,7 +105,7 @@ namespace WpfApp1
             clearStars();
             for (int i = 0; i < player.GetStars(); i++) {
                 Image image = starsGrid.Children[i] as Image;
-                image.Source = new BitmapImage(new Uri("pack://application:,,,/images/starsolid.png", UriKind.Absolute));
+                image.Source = new BitmapImage(new Uri("pack://application:,,/images/starsolid.png", UriKind.Absolute));
             }
         } 
 
@@ -117,7 +117,7 @@ namespace WpfApp1
             for (int i = 0; i < 3; i++)
             {
                 Image image = starsGrid.Children[i] as Image;
-                image.Source = new BitmapImage(new Uri("pack://application:,,,/images/staroutline.png", UriKind.Absolute));
+                image.Source = new BitmapImage(new Uri("pack://application:,,/images/staroutline.png", UriKind.Absolute));
             }
         }
 
